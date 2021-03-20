@@ -14,6 +14,18 @@ var Parse = {
         console.error('chatterbox: Failed to create messages', error);
       }
     });
+
+    // check if the room you want to create a message in already exists or not
+    // if not, add room name to list of rooms
+    let foundRoom = false;
+    $('#rooms select option').each((index, value) => {
+      if ($(value).text() === message.roomname) {
+        foundRoom = true;
+      }
+    });
+    if (!foundRoom && message.roomname !== undefined) {
+      $('#rooms select').append($(`<option>${message.roomname}</option>`));
+    }
   },
 
   readAll: function(successCB, errorCB = null) {
